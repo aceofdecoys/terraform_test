@@ -1,0 +1,17 @@
+upstream test_proxy {
+    server EC-01;
+    server EC-02;
+}
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /usr/share/nginx/html;
+
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        proxy_pass http://test_proxy;
+    }
+}
